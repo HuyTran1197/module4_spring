@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách sản phẩm</title>
+    <th:block th:insert="~{/layout/bootstrap :: library}"/>
+</head>
+<body>
+<div th:replace="~{/layout/bootstrap :: my-navbar}"/>
+<h1>Products List</h1>
+<a href="home" class="btn btn-secondary">Quay lại trang chủ</a>
+<a href="products/add" class="btn btn-success">Thêm mới sản phẩm</a>
+<form th:action="@{/products}" method="get" th:object="${product}">
+    <input th:field="*{name}"  placeholder="enter name"/>
+    <select th:field="*{produce}">
+        <option value="">---Chọn nhà sản xuất---</option>
+        <option th:value="Apple">Apple</option>
+        <option th:value="SamSung">SamSung</option>
+        <option th:value="Oppo">Oppo</option>
+        <option th:value="Microsoft">Microsoft</option>
+        <option th:value="Android">Android</option>
+    </select>
+    <button>Tìm kiếm</button>
+    <a href="/products" class="btn btn-dark btn-sm">
+        <=
+    </a>
+</form>
+<div th:if="${mess}">
+    <h4 th:text="${mess}"></h4>
+</div>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Produce</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="pro:${productList}">
+        <td th:text="${pro.id}"></td>
+        <td th:text="${pro.name}"></td>
+        <td th:text="${pro.price}"></td>
+        <td th:text="${pro.description}"></td>
+        <td th:text="${pro.produce}"></td>
+        <td>
+            <form th:action="@{/products/{id}/delete(id=${pro.id})}" method="post">
+                <button>Delete</button>
+            </form>
+            <a th:href="@{/products/__${pro.id}__/detail}">Detail</a>
+            <a th:href="@{/products/{id}/edit(id=${pro.id})}">
+                Edit
+            </a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
