@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <th:block th:insert="layout/layout :: library"/>
+</head>
+<body>
+<a href="/blog">Quay lại trang blog</a>
+<div>
+  <h2 th:text="${blog.title}"></h2>
+</div>
+<div>
+  <p th:text="${blog.content}"></p>
+</div>
+<div>
+  Ngòi bút<h4 th:text="${blog.author}"></h4>
+</div>
+<div>
+  Ngày tạo
+  <p th:text="${blog.createBlog}"></p>
+</div>
+</body>
+</html>

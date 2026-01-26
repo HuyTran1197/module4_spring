@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ blog</title>
+    <th:block th:insert="layout/layout :: library"/>
+</head>
+<body>
+<a href="/home">Trang chủ</a>
+<a href="blog/add">Tạo blog mới</a>
+<h4 th:text="${mess}"></h4>
+<div th:each="blog:${blogList}">
+    <h2 th:text="${blog.title}"></h2>
+    <div>
+        <p th:text="${#strings.length(blog.content)>200
+    ? blog.content.substring(0,200) + '...'
+    : blog.content}"></p>
+        <a th:href="@{/blog/{id}/detail(id=${blog.id})}">Xem thêm</a>
+    </div>
+    <div>
+        Ngòi bút <h4 th:text="${blog.author}"></h4>
+    </div>
+    <form th:action="@{/blog/{id}/delete(id=${blog.id})}"
+          onsubmit="return confirm('Bạn có chắc muốn xóa blog này không?')"
+          method="post">
+        <button>Xóa</button>
+    </form>
+    <a th:href="@{/blog/{id}/update(id=${blog.id})}">Cập nhật</a>
+</div>
+</body>
+</html>

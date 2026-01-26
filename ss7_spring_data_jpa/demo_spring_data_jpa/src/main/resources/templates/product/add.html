@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm mới sản phẩm</title>
+  <th:block th:insert="/layout/bootstrap :: library"/>
+</head>
+<body>
+<div th:replace="~{/layout/bootstrap :: my-navbar}"/>
+<form th:action="@{/products/add}" method="post" th:object="${product}">
+  <input th:field="*{name}" placeholder="enter name"/><br>
+  <input th:field="*{price}" placeholder="enter price"/><br>
+  <input th:field="*{description}" placeholder="enter description"/><br>
+  <select th:field="*{produce}">
+    <option value="">---Chọn nhà sản xuất---</option>
+    <option th:value="Apple">Apple</option>
+    <option th:value="SamSung">SamSung</option>
+    <option th:value="Oppo">Oppo</option>
+    <option th:value="Microsoft">Microsoft</option>
+    <option th:value="Android">Android</option>
+  </select>
+  <button>Save</button>
+</form>
+</body>
+</html>
