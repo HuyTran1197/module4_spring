@@ -1,3 +1,35 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Trang chủ blog</title>-->
+<!--    <th:block th:insert="layout/layout :: library"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a href="/home">Trang chủ</a>-->
+<!--<a href="blog/add">Tạo blog mới</a>-->
+<!--<a href="blog/category">Danh sách danh mục</a>-->
+<!--<h4 th:text="${mess}"></h4>-->
+<!--<div th:each="blog:${blogList}">-->
+<!--    <h2 th:text="${blog.title}"></h2>-->
+<!--    <div>-->
+<!--        <p th:text="${#strings.length(blog.content)>200-->
+<!--    ? blog.content.substring(0,200) + '...'-->
+<!--    : blog.content}"></p>-->
+<!--        <a th:href="@{/blog/{id}/detail(id=${blog.id})}">Xem thêm</a>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        Ngòi bút <h4 th:text="${blog.author}"></h4>-->
+<!--    </div>-->
+<!--    <form th:action="@{/blog/{id}/delete(id=${blog.id})}"-->
+<!--          onsubmit="return confirm('Bạn có chắc muốn xóa blog này không?')"-->
+<!--          method="post">-->
+<!--        <button>Xóa</button>-->
+<!--    </form>-->
+<!--    <a th:href="@{/blog/{id}/update(id=${blog.id})}">Cập nhật</a>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
@@ -6,26 +38,56 @@
     <th:block th:insert="layout/layout :: library"/>
 </head>
 <body>
-<a href="/home">Trang chủ</a>
-<a href="blog/add">Tạo blog mới</a>
-<h4 th:text="${mess}"></h4>
-<div th:each="blog:${blogList}">
-    <h2 th:text="${blog.title}"></h2>
-    <div>
-        <p th:text="${#strings.length(blog.content)>200
-    ? blog.content.substring(0,200) + '...'
-    : blog.content}"></p>
-        <a th:href="@{/blog/{id}/detail(id=${blog.id})}">Xem thêm</a>
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📚 Blog</h2>
+        <div>
+            <a href="/home" class="btn btn-outline-secondary">Trang chủ</a>
+            <a href="/blog/add" class="btn btn-primary">➕ Tạo blog</a>
+            <a href="/blog/category" class="btn btn-outline-info">📂 Danh mục</a>
+        </div>
     </div>
-    <div>
-        Ngòi bút <h4 th:text="${blog.author}"></h4>
+
+    <div th:if="${mess}" class="alert alert-success" th:text="${mess}"></div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4" th:each="blog:${blogList}">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title" th:text="${blog.title}"></h4>
+
+                    <p class="card-text text-muted">
+                        <span th:text="${#strings.length(blog.content)>200
+                        ? blog.content.substring(0,200) + '...'
+                        : blog.content}"></span>
+                    </p>
+
+                    <p class="text-end fst-italic">
+                        ✍ <span th:text="${blog.author}"></span>
+                    </p>
+                </div>
+
+                <div class="card-footer d-flex justify-content-between">
+                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}" class="btn btn-sm btn-outline-primary">
+                        Xem thêm
+                    </a>
+
+                    <div class="d-flex gap-2">
+                        <a th:href="@{/blog/{id}/update(id=${blog.id})}"
+                           class="btn btn-sm btn-warning">Cập nhật</a>
+
+                        <form th:action="@{/blog/{id}/delete(id=${blog.id})}"
+                              method="post"
+                              onsubmit="return confirm('Bạn có chắc muốn xóa blog này không?')">
+                            <button class="btn btn-sm btn-danger">Xóa</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <form th:action="@{/blog/{id}/delete(id=${blog.id})}"
-          onsubmit="return confirm('Bạn có chắc muốn xóa blog này không?')"
-          method="post">
-        <button>Xóa</button>
-    </form>
-    <a th:href="@{/blog/{id}/update(id=${blog.id})}">Cập nhật</a>
+
 </div>
 </body>
 </html>

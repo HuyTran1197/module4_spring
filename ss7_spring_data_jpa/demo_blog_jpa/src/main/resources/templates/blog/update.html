@@ -1,26 +1,68 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <th:block th:insert="layout/layout :: library"/>
-</head>
-<body>
-<form th:action="@{/blog/update}" method="post" th:object="${blog}">
-    <div>
-        <input th:field="*{id}" hidden="hidden"/>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <th:block th:insert="layout/layout :: library"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form th:action="@{/blog/update}" method="post" th:object="${blog}">-->
+<!--    <div>-->
+<!--        <input th:field="*{id}" hidden="hidden"/>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <input th:field="*{title}"/>-->
+<!--    </div>-->
+<!--    <select name="categoryId">-->
+<!--        <option th:each="c:${categoryList}"-->
+<!--                th:selected="${c.id==blog.category.id}"-->
+<!--                th:value="${c.id}" th:text="${c.name}"></option>-->
+<!--    </select>-->
+<!--    <div>-->
+<!--        <textarea th:field="*{content}"></textarea>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <input th:field="*{author}"/>-->
+<!--    </div>-->
+<!--    <button>Cập nhật</button>-->
+<!--    <a href="/blog">Hủy thao tác</a>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+<form th:action="@{/blog/update}" method="post" th:object="${blog}" class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-warning">
+            <h4>✏ Cập nhật blog</h4>
+        </div>
+
+        <div class="card-body">
+            <input th:field="*{id}" hidden/>
+
+            <div class="mb-3">
+                <input class="form-control" th:field="*{title}"/>
+            </div>
+
+            <div class="mb-3">
+                <select name="categoryId" class="form-select">
+                    <option th:each="c:${categoryList}"
+                            th:selected="${c.id==blog.category.id}"
+                            th:value="${c.id}" th:text="${c.name}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <textarea class="form-control" th:field="*{content}" rows="5"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <input class="form-control" th:field="*{author}"/>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-warning">Cập nhật</button>
+                <a href="/blog" class="btn btn-secondary">Hủy</a>
+            </div>
+        </div>
     </div>
-    <div>
-        <input th:field="*{title}"/>
-    </div>
-    <div>
-        <textarea th:field="*{content}"/>
-    </div>
-    <div>
-        <input th:field="*{author}"/>
-    </div>
-    <button>Cập nhật</button>
-    <a href="/blog">Hủy thao tác</a>
 </form>
-</body>
-</html>

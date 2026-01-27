@@ -31,4 +31,9 @@ public class Blog {
     public void onCreate(){
         this.createBlog = LocalDateTime.now();
     }
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 }

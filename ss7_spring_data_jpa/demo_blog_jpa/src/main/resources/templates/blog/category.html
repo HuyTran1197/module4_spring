@@ -1,0 +1,31 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Danh sách danh mục</title>-->
+<!--    <th:block th:insert="layout/layout :: library"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<table>-->
+<!--    <tr th:each="ctg:${categoryList}">-->
+<!--        <td th:text="${ctg.name}"></td>-->
+<!--    </tr>-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->
+<div class="container mt-4">
+    <a href="/blog" class="btn btn-outline-secondary mb-3">⬅ Quay lại</a>
+    <h3>📂 Danh mục</h3>
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="table-light">
+        <tr>
+            <th>Tên danh mục</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ctg:${categoryList}">
+            <td th:text="${ctg.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

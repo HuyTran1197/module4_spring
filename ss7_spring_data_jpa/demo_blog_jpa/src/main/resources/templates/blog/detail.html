@@ -1,24 +1,47 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-  <th:block th:insert="layout/layout :: library"/>
-</head>
-<body>
-<a href="/blog">Quay lại trang blog</a>
-<div>
-  <h2 th:text="${blog.title}"></h2>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <th:block th:insert="layout/layout :: library"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a href="/blog">Quay lại trang blog</a>-->
+<!--<div>-->
+<!--    Tiêu đề: <h2 th:text="${blog.title}"></h2>-->
+<!--    Danh mục: <p th:text="${blog.category.name}"></p>-->
+<!--</div>-->
+<!--<div>-->
+<!--    <p th:text="${blog.content}"></p>-->
+<!--</div>-->
+<!--<div>-->
+<!--    Ngòi bút<h4 th:text="${blog.author}"></h4>-->
+<!--</div>-->
+<!--<div>-->
+<!--    Ngày tạo-->
+<!--    <p th:text="${blog.createBlog}"></p>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+<div class="container mt-4">
+    <a href="/blog" class="btn btn-outline-secondary mb-3">⬅ Quay lại</a>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <h2 th:text="${blog.title}"></h2>
+
+            <p class="text-muted">
+                📂 <span th:text="${blog.category.name}"></span> |
+                🕒 <span th:text="${blog.createBlog}"></span>
+            </p>
+
+            <hr>
+
+            <p th:text="${blog.content}"></p>
+
+            <p class="text-end fst-italic">
+                ✍ <span th:text="${blog.author}"></span>
+            </p>
+        </div>
+    </div>
 </div>
-<div>
-  <p th:text="${blog.content}"></p>
-</div>
-<div>
-  Ngòi bút<h4 th:text="${blog.author}"></h4>
-</div>
-<div>
-  Ngày tạo
-  <p th:text="${blog.createBlog}"></p>
-</div>
-</body>
-</html>
