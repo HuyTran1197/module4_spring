@@ -29,13 +29,6 @@ public class CategoryService implements ICategoryService{
 
     @Override
     public boolean save(Category category) {
-        for (Category c: categoryRepository.findAll()){
-            if (c.getId()== category.getId()){
-                System.out.println("id of category is already exists");
-                return false;
-            }
-        }
-
         try {
             categoryRepository.save(category);
             return true;

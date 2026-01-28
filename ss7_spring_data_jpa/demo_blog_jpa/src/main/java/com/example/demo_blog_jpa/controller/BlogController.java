@@ -5,6 +5,10 @@ import com.example.demo_blog_jpa.entity.Blog;
 import com.example.demo_blog_jpa.entity.Category;
 import com.example.demo_blog_jpa.service.IBlogService;
 import com.example.demo_blog_jpa.service.ICategoryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +28,24 @@ public class BlogController {
     }
 
     @GetMapping("")
-    public String showBlog(Model model){
-        model.addAttribute("blogList",blogService.findAll());
+    public String showBlog(Model model,
+                           @RequestParam(name = "page",defaultValue = "0")int page,
+                           @RequestParam(name = "searchTitle",defaultValue = "")String searchTitle,
+                           @RequestParam(name = "searchCategory",defaultValue = "0")int categoryId){
+        Sort sort = Sort.by("title").descending();
+        Pageable pageable = PageRequest.of(page,3,sort);
+        Page<Blog> blogPage;
+
+        if (categoryId!=0){
+            blogPage = blogService.search(categoryId,searchTitle,pageable);
+        }else {
+            blogPage = blogService.findByTitleContaining(searchTitle,pageable);
+        }
+        model.addAttribute("blogPage",blogPage);
+        model.addAttribute("searchTitle",searchTitle);
+        model.addAttribute("searchCategory",categoryId);
         model.addAttribute("categoryList",categoryService.findAll());
+
         return "blog/form";
     }
 
@@ -88,4 +107,43 @@ public class BlogController {
         return "redirect:/blog";
     }
 
+    @GetMapping("category/add")
+    public String showFormAddCtg(Model model){
+        model.addAttribute("category",new Category());
+        return "blog/add-category";
+    }
+
+    @PostMapping("category/add")
+    public String saveCategory(@ModelAttribute Category category,
+                               RedirectAttributes redirectAttributes){
+
+        boolean isSuccess = categoryService.save(category);
+        redirectAttributes.addFlashAttribute("mess",isSuccess?"Tạo danh mục thành công":"Tạo danh mục không thành công");
+        return "redirect:/blog/category";
+    }
+
+    @GetMapping("category/{id}/update")
+    public String showFormUpdateCtg(@PathVariable(name = "id")int id,
+                                 Model model){
+        model.addAttribute("category",categoryService.findById(id));
+        return "/blog/update-category";
+    }
+    @PostMapping("category/update")
+    public String updateCtg(@ModelAttribute Category category,
+                            RedirectAttributes redirectAttributes){
+        boolean isSuccess = categoryService.save(category);
+        redirectAttributes.addFlashAttribute("mess",isSuccess?"Cập nhật danh mục thành công":"Cập nhật danh mục không thành công");
+
+        return "redirect:/blog/category";
+
+    }
+
+    @PostMapping("/category/{id}/delete")
+    public String deleteCtgById(@PathVariable(name = "id")int id,
+                                RedirectAttributes redirectAttributes){
+        boolean isSuccess = categoryService.deleteById(id);
+        redirectAttributes.addFlashAttribute("mess",isSuccess?"Xóa danh mục thành công":"Xóa danh mục không thành công");
+        return "redirect:/blog/category";
+
+    }
 }

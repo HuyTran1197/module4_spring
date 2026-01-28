@@ -39,9 +39,20 @@
 </head>
 <body>
 <div class="container mt-4">
-
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>📚 Blog</h2>
+        <form action="/blog">
+            <input name="searchTitle" th:value="${searchTitle}"/>
+            <select name="searchCategory">
+                <option value="0" th:selected="${searchCategory == 0}">---Chọn danh mục---</option>
+                <option th:each="ctg:${categoryList}"
+                        th:text="${ctg.name}"
+                        th:value="${ctg.id}"
+                        th:selected="${ctg.id==searchCategory}"></option>
+            </select>
+            <button>Tìm kiếm</button>
+            <a class="btn btn-secondary" href="/blog">Trở về</a>
+        </form>
         <div>
             <a href="/home" class="btn btn-outline-secondary">Trang chủ</a>
             <a href="/blog/add" class="btn btn-primary">➕ Tạo blog</a>
@@ -52,11 +63,10 @@
     <div th:if="${mess}" class="alert alert-success" th:text="${mess}"></div>
 
     <div class="row">
-        <div class="col-md-6 mb-4" th:each="blog:${blogList}">
+        <div class="col-md-6 mb-4" th:each="blog:${blogPage.content}">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
                     <h4 class="card-title" th:text="${blog.title}"></h4>
-
                     <p class="card-text text-muted">
                         <span th:text="${#strings.length(blog.content)>200
                         ? blog.content.substring(0,200) + '...'
@@ -87,7 +97,10 @@
             </div>
         </div>
     </div>
-
 </div>
+<a class="btn btn-primary" th:if="${blogPage.hasPrevious()}" th:href="@{/blog(page=${blogPage.number -1},searchTitle=${searchTitle})}">Trước</a>
+<span th:text="${blogPage.number +1}"></span>
+<span th:text="${blogPage.totalPages}"></span>
+<a class="btn btn-dark" th:if="${blogPage.hasNext()}" th:href="@{/blog(page=${blogPage.number +1},searchTitle=${searchTitle})}">Sau</a>
 </body>
 </html>

@@ -1,20 +1,15 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Danh sách danh mục</title>-->
-<!--    <th:block th:insert="layout/layout :: library"/>-->
-<!--</head>-->
-<!--<body>-->
-<!--<table>-->
-<!--    <tr th:each="ctg:${categoryList}">-->
-<!--        <td th:text="${ctg.name}"></td>-->
-<!--    </tr>-->
-<!--</table>-->
-<!--</body>-->
-<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách danh mục</title>
+    <th:block th:insert="layout/layout :: library"/>
+</head>
+<body>
 <div class="container mt-4">
     <a href="/blog" class="btn btn-outline-secondary mb-3">⬅ Quay lại</a>
+    <a href="/blog/category/add" class="btn btn-outline-success mb-3">Thêm mới danh mục</a>
+    <div th:if="${mess}" class="alert alert-success" th:text="${mess}"></div>
     <h3>📂 Danh mục</h3>
     <table class="table table-bordered table-hover mt-3">
         <thead class="table-light">
@@ -25,7 +20,21 @@
         <tbody>
         <tr th:each="ctg:${categoryList}">
             <td th:text="${ctg.name}"></td>
+            <td>
+                <a th:href="@{/blog/category/{id}/update(id=${ctg.id})}">
+                    Cập nhật
+                </a>
+            </td>
+            <td>
+                <form th:action="@{/blog/category/{id}/delete(id=${ctg.id})}"
+                      onsubmit="return confirm('Bạn có chắc muốn xóa danh mục này không?')"
+                      method="post">
+                    <button>Xóa</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
+</body>
+</html>

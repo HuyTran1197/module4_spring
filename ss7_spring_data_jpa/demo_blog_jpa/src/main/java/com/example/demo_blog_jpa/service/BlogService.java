@@ -2,10 +2,11 @@ package com.example.demo_blog_jpa.service;
 
 import com.example.demo_blog_jpa.entity.Blog;
 import com.example.demo_blog_jpa.repository.IBlogRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 @Transactional
@@ -17,10 +18,17 @@ public class BlogService implements IBlogService{
         this.blogRepository = blogRepository;
     }
 
+
     @Override
-    public List<Blog> findAll() {
-        return blogRepository.findAll();
+    public Page<Blog> findByTitleContaining(String title, Pageable pageable) {
+        return blogRepository.findByTitleContaining(title, pageable);
     }
+
+    @Override
+    public Page<Blog> search(int categoryId, String title, Pageable pageable) {
+        return blogRepository.search(categoryId,"%"+title+"%", pageable);
+    }
+
 
     @Override
     public Blog findById(int id) {
@@ -49,8 +57,4 @@ public class BlogService implements IBlogService{
         return false;
     }
 
-    @Override
-    public List<Blog> findByTitle(String tile) {
-        return blogRepository.findByTitleContaining(tile);
-    }
 }
