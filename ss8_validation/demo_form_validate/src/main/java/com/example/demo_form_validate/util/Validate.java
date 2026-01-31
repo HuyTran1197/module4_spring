@@ -17,12 +17,16 @@ public class Validate implements Validator {
             errors.rejectValue("firstName",null,"không được để trống");
         } else if (!user.getFirstName().matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$")) {
             errors.rejectValue("firstName",null,"sai định dạng");
+        } else if (user.getFirstName().length()<5 || user.getFirstName().length()>45) {
+            errors.rejectValue("firstName",null,"kí tự tối thiểu là 5, tối đa 45");
         }
 
         if (user.getLastName().equals("")){
             errors.rejectValue("lastName",null,"không được để trống");
         } else if (!user.getLastName().matches("^[A-Z][a-z]+$")) {
             errors.rejectValue("lastName",null,"sai định dạng");
+        }else if (user.getLastName().length()<5 || user.getLastName().length()>45) {
+            errors.rejectValue("lastName",null,"kí tự tối thiểu là 5, tối đa 45");
         }
 
         if (!errors.hasFieldErrors("age")){
