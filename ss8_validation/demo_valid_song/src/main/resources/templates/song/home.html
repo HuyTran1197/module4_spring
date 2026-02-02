@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:insert="layout/layout :: library"/>
+</head>
+<body>
+<a href="song/add" class="btn btn-success">Thêm bài hát</a>
+<h4 th:text="${mess}"></h4>
+<table>
+    <tr>
+        <th>Tên bài hát</th>
+        <th>Nghệ sĩ</th>
+        <th>Thể loại</th>
+        <th>Hành động</th>
+    </tr>
+    <tr th:each="s:${songList}">
+        <td th:text="${s.name}"></td>
+        <td th:text="${s.single}"></td>
+        <td th:text="${s.type}"></td>
+        <td>
+            <a th:href="@{/song/{id}/edit(id=${s.id})}">Cập nhật bài hát</a>
+        </td>
+    </tr>
+    <tr th:if="${songList.isEmpty()}">
+        <td colspan="3">Không có dữ liệu</td>
+    </tr>
+</table>
+</body>
+</html>
