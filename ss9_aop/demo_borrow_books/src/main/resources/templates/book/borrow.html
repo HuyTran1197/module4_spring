@@ -1,0 +1,41 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Mượn sách</title>-->
+<!--    <th:block th:insert="layout/layout :: library"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div>-->
+<!--    <h1>Mượn sách thành công</h1>-->
+<!--    Mã mượn sách: <span th:text="${transferId}"></span><br>-->
+<!--    Để trả sách, chúng tôi cần đối chiếu với một số thủ thuật cần thiết,-->
+<!--    <b class="text-danger">vì vậy hãy lưu lại mã sách của bạn</b>.-->
+<!--    Xin cảm ơn !-->
+<!--</div>-->
+<!--<h4>-->
+<!--    <a href="/book">Quay lại</a>-->
+<!--</h4>-->
+<!--</body>-->
+<!--</html>-->
+<!--&lt;!&ndash;12538&ndash;&gt;-->
+<!--&lt;!&ndash;18583&ndash;&gt;-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mượn sách</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <th:block th:insert="layout/layout :: library"/>
+</head>
+<body>
+<div class="container mt-4">
+    <div class="alert alert-success">
+        <h1>Mượn sách thành công</h1>
+        <p>Mã mượn sách: <b th:text="${transferId}"></b></p>
+        <p class="text-danger">Hãy lưu lại mã sách để trả sau</p>
+        <a href="/book" class="btn btn-primary mt-2">Quay lại</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Trang chủ</title>-->
+<!--  <th:block th:insert="layout/layout :: library"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:object="${book}">-->
+<!--  <div>-->
+<!--    Số lượng còn lại: <p th:text="${book.quantity}"></p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    Tên sách: <h2 th:text="${book.name}"></h2>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    Tác giả: <h5 th:text="${book.author}"></h5>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    Năm xuất bản: <h5 th:text="${book.publishYear}"></h5>-->
+<!--  </div>-->
+<!--  <a th:href="@{/book/{id}/borrow(id=${book.id})}">Mượn sách</a>-->
+<!--  <a href="/book">Quay lại trang chủ</a>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chi tiết sách</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <th:block th:insert="layout/layout :: library"/>
+</head>
+<body>
+<div class="container mt-4" th:object="${book}">
+  <div class="card p-3">
+    <h3 th:text="${book.name}">Tên sách</h3>
+    <h5 class="text-muted" th:text="${book.author}">Tác giả</h5>
+    <p>Năm xuất bản: <span th:text="${book.publishYear}"></span></p>
+    <p>Số lượng còn lại: <span th:text="${book.quantity}"></span></p>
+    <div class="d-flex gap-2 mt-3">
+      <a th:href="@{/book/{id}/borrow(id=${book.id})}" class="btn btn-primary">Mượn sách</a>
+      <a href="/book" class="btn btn-secondary">Quay lại</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
