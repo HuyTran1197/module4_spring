@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sản phẩm</title>
+    <th:block th:insert="/layout/bootstrap :: library"/>
+</head>
+<body>
+<div th:replace="~{/layout/bootstrap :: my-navbar}"/>
+<h2>Chi tiet</h2>
+<div>
+    Id: <label th:text="${product.id}"></label>
+</div>
+<div>
+    Name: <label th:text="${product.name}"></label>
+</div>
+<div>
+    Price: <label th:text="${product.price}"></label>
+</div>
+<div>
+    Description: <label th:text="${product.description}"></label>
+</div>
+<div>
+    Produce: <label th:text="${product.produce}"></label>
+</div>
+<div>
+    Category: <label th:text="${product.category.name}"></label>
+</div>
+
+</body>
+</html>

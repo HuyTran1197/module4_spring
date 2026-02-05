@@ -1,0 +1,197 @@
+
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Shop</title>-->
+<!--  <style>-->
+<!--    body {-->
+<!--      font-family: Arial, sans-serif;-->
+<!--      background: #f9f9f9;-->
+<!--      padding: 40px;-->
+<!--    }-->
+
+<!--    h1 {-->
+<!--      text-align: center;-->
+<!--      color: #333;-->
+<!--    }-->
+
+<!--    table {-->
+<!--      width: 80%;-->
+<!--      margin: 0 auto;-->
+<!--      border-collapse: collapse;-->
+<!--      background-color: #fff;-->
+<!--      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);-->
+<!--    }-->
+
+<!--    th, td {-->
+<!--      padding: 15px;-->
+<!--      text-align: center;-->
+<!--      border-bottom: 1px solid #ccc;-->
+<!--    }-->
+
+<!--    th {-->
+<!--      background-color: #007bff;-->
+<!--      color: white;-->
+<!--    }-->
+
+<!--    a.button {-->
+<!--      display: inline-block;-->
+<!--      padding: 6px 12px;-->
+<!--      background-color: #28a745;-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--      border-radius: 5px;-->
+<!--    }-->
+
+<!--    a.button:hover {-->
+<!--      background-color: #218838;-->
+<!--    }-->
+
+<!--    .cart-link {-->
+<!--      display: block;-->
+<!--      text-align: right;-->
+<!--      margin-bottom: 20px;-->
+<!--    }-->
+
+<!--    .cart-link a {-->
+<!--      color: #007bff;-->
+<!--      text-decoration: none;-->
+<!--      font-weight: bold;-->
+<!--    }-->
+
+<!--    .cart-link a:hover {-->
+<!--      text-decoration: underline;-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a href="/products">Quay lại</a>-->
+<!--<div class="cart-link">-->
+<!--  <a href="/shopping-cart">🛍️ Your Cart</a>-->
+<!--</div>-->
+<!--<h1>Product List</h1>-->
+<!--<table>-->
+<!--  <tr>-->
+<!--    <th>Name</th>-->
+<!--    <th>Price</th>-->
+<!--    <th>Add To Cart</th>-->
+<!--  </tr>-->
+<!--  <th:block th:each="product : ${products}">-->
+<!--    <tr>-->
+<!--      <td th:text="${product.name}"></td>-->
+<!--      <td th:text="${#numbers.formatDecimal(product.price, 0, 0)} + ' đ'"></td>-->
+<!--      <td>-->
+<!--        <a class="button" th:href="@{/add/__${product.id}__(action='list')}">Add to Cart</a>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--  </th:block>-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .top-bar a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #ee4d2d;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .price {
+      color: #ee4d2d;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 14px;
+      background: #ee4d2d;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      background: #d73211;
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="/products">← Quay lại</a>
+  <a href="/shopping-cart">🛒 Giỏ hàng</a>
+</div>
+
+<h1>Sản phẩm nổi bật</h1>
+
+<div class="product-grid">
+  <div class="product-card" th:each="product : ${products}">
+    <!-- Ảnh minh họa -->
+    <img src="https://picsum.photos/300/200" alt="product">
+
+    <div class="product-info">
+      <h4 th:text="${product.name}"></h4>
+      <div class="price" th:text="${#numbers.formatDecimal(product.price,0,0)} + ' đ'"></div>
+
+      <a class="btn"
+         th:href="@{/add/__${product.id}__(action='list')}">
+        Thêm vào giỏ
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
