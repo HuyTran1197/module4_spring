@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog AJAX</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+<h2>Search Blog</h2>
+
+<form id="searchForm">
+    <input type="text" id="searchTitle" placeholder="Enter title...">
+    <button>Search</button>
+</form>
+<hr>
+
+<div id="blogList"></div>
+
+<button id="loadMore">Load More</button>
+
+<script>
+
+    let page = 0;
+
+    function loadBlogs(reset = false) {
+
+        if (reset) {
+            page = 0;
+            $("#blogList").html("");
+        }
+
+        $.ajax({
+            url: "/api/blogs",
+            method: "GET",
+            data: {
+                page: page,
+                searchTitle: $("#searchTitle").val()
+            },
+            success: function (response) {
+
+                let blogs = response.content;
+
+                blogs.forEach(blog => {
+                    $("#blogList").append(
+                        `<div>
+                            <h3>${blog.title}</h3>
+                            <p>${blog.content}</p>
+                        </div>`
+                    );
+                });
+
+                page++;
+            },
+            error: function (xhr) {
+                console.log("No more data or error", xhr.status);
+            }
+        });
+    }
+
+    // Submit search
+    $("#searchForm").submit(function (e) {
+        e.preventDefault();
+        loadBlogs(true);
+    });
+
+    // Load more
+    $("#loadMore").click(function () {
+        loadBlogs();
+    });
+
+    // Initial load
+    loadBlogs();
+
+</script>
+
+</body>
+</html>
