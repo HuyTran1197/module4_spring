@@ -13,66 +13,52 @@
     <input type="text" id="searchTitle" placeholder="Enter title...">
     <button>Search</button>
 </form>
+
 <hr>
 
 <div id="blogList"></div>
-
 <button id="loadMore">Load More</button>
 
+</body>
 <script>
-
     let page = 0;
-
-    function loadBlogs(reset = false) {
-
-        if (reset) {
+    function loadBlogs(rs = false) {
+        if (rs){
             page = 0;
             $("#blogList").html("");
         }
-
-        $.ajax({
-            url: "/api/blogs",
-            method: "GET",
-            data: {
-                page: page,
-                searchTitle: $("#searchTitle").val()
-            },
-            success: function (response) {
-
-                let blogs = response.content;
-
-                blogs.forEach(blog => {
-                    $("#blogList").append(
-                        `<div>
-                            <h3>${blog.title}</h3>
-                            <p>${blog.content}</p>
-                        </div>`
-                    );
-                });
-
-                page++;
-            },
-            error: function (xhr) {
-                console.log("No more data or error", xhr.status);
+        $.get("/api/blogs", {
+            searchTitle: $("#searchTitle").val(),
+            page: page
+        }, function (resp) {
+            if (!resp||!resp.content){
+                $("#blogList").html("NO DATA");
+                return;
             }
-        });
+            resp.content.forEach(blog=>{
+                $("#blogList").append(
+                    `<div>
+                          <h3>${blog.title}</h3>
+                          <p>${blog.content}</p>
+                     </div>`
+                );
+            });
+            if (resp.last){
+                $("#loadMore").hide();
+            }else {
+                $("#loadMore").show();
+            }
+        })
     }
 
-    // Submit search
     $("#searchForm").submit(function (e) {
         e.preventDefault();
         loadBlogs(true);
     });
-
-    // Load more
-    $("#loadMore").click(function () {
-        loadBlogs();
+    $("#loadMore").click(function (){
+        page++;
+        loadBlogs(false);
     });
 
-    // Initial load
-    loadBlogs();
-
 </script>
-
-</body>
 </html>
