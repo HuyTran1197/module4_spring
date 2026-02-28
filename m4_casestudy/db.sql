@@ -12,7 +12,7 @@ password varchar(255) not null,
 role_id int not null,
 foreign key (role_id) references role(id)
 );
-create table user(
+create table users(
 id bigint primary key auto_increment,
 account_id bigint not null unique,
 foreign key (account_id) references account(id) on delete cascade,
@@ -35,10 +35,10 @@ id bigint primary key auto_increment,
 user_id bigint not null,
 field_id int not null,
 shift_id int not null,
-foreign key (user_id) references user(id),
+foreign key (user_id) references users(id),
 foreign key (field_id) references fields(id),
 foreign key (shift_id) references shift(id),
-status enum('PENDING','APPROVED','CANCELED') default('PENDING'),
+status enum('PENDING','APPROVED','CANCELED') default'PENDING',
 date_book date not null,
 unique (field_id,shift_id,date_book)
 );
@@ -64,7 +64,7 @@ create table study_book(
 id bigint primary key auto_increment,
 user_id bigint not null,
 schedule_id int not null,
-foreign key (user_id) references user(id),
+foreign key (user_id) references users(id),
 foreign key (schedule_id) references study_schedule(id),
 status enum('PENDING','APPROVED','CANCELED') not null default 'PENDING',
 unique(user_id,schedule_id)
@@ -107,7 +107,7 @@ insert into account(username,password,role_id) values
 ('vuphuoc','123',2),
 ('tienlinh','123',2);
 
-insert into user(account_id,name,email,phone) values
+insert into users(account_id,name,email,phone) values
 (1,'Đinh Phương Nam','namdb@gmail.com','0905123456'),
 (2,'Trần Phát Huy','huyg5e@gmail.com','0905123457'),
 (3,'Đình Hùng','hungdinh@gmail.com','0905123458'),
